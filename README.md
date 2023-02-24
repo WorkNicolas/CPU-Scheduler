@@ -1,5 +1,13 @@
 <h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 
+<h2 style="font-weight:bold">Authors</h2>
+<ul>
+<li>John Gabriel Buenaventura</li>
+<li>Jose Mari Tan</li>
+<li>Maria Clarissa Marasigan</li>
+<li>Carl Nicolas V. Mendoza</li>
+</ul>
+
 <h2 style="font-weight:bold">✅ Current Features as of 2023-02-24T2107H ☑</h2>
 <b>Process.java ⚒</b>
 <ul>
@@ -30,6 +38,11 @@
 <li>Gantt Chart</li>
 <li>Documentation Format</li>
 </ul>
+
+<h3 align="left">⌨ Language Used</h3>
+<p align="left">
+<a href="https://www.java.com/en/"><img width="75px" src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java Icon" /></a>
+</p>
 
 <h2 style="font-weight:bold;">TASK 💽</h2> 
 In a group (maximum of 4 members per group), create a program that will simliate and show the Gantt chart 📊 of each CPU schedliing Algorithm.
