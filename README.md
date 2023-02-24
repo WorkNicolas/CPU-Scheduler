@@ -39,6 +39,45 @@
 <li>Documentation Format</li>
 </ul>
 
+<h2 style="font-weight:bold">Notes</h2>
+<b>First-Come, First-Served (FCFS) Scheduling:</b>
+
+Waiting time = 0 for the first process, and for subsequent processes, it is the sum of the burst times of all previous processes
+Turnaround time = Burst time + Waiting time
+
+<b>Shortest-Job-First (SJF) Scheduling:</b>
+
+Waiting time = Time process is ready to execute - Arrival time
+Turnaround time = Burst time + Waiting time
+
+<b>Priority Scheduling:</b>
+
+Waiting time = Time spent in the ready queue waiting for CPU time
+Turnaround time = Burst time + Waiting time
+
+<b>Round-Robin Scheduling:</b>
+
+Waiting time = Turnaround time - Burst time
+Turnaround time = Time at which the process completes - Arrival time
+
+<b>Multilevel Queue Scheduling:</b>
+
+In Multilevel Queue Scheduling, processes are divided into different queues based on their characteristics (e.g., priority, memory requirements, etc.), and each queue is assigned a different scheduling algorithm. The waiting time and turnaround time formulas for Multilevel Queue Scheduling depend on the scheduling algorithms used for each queue.
+
+Assuming each queue uses the FCFS scheduling algorithm, the formulas are:
+
+Waiting time = 0 for the first process in each queue, and for subsequent processes in each queue, it is the sum of the burst times of all previous processes in that queue
+Turnaround time = Burst time + Waiting time
+For the case where each queue uses the Round Robin scheduling algorithm, the formulas are:
+
+Waiting time = Turnaround time - Burst time
+Turnaround time = Time at which the process completes - Arrival time
+
+<b>Shortest Remaining Time (SRT) Scheduling:</b>
+
+Waiting time = Turnaround time - Burst time
+Turnaround time = Time at which the process completes - Arrival time
+
 <h3 align="left">⌨ Language Used</h3>
 <p align="left">
 <a href="https://www.java.com/en/"><img width="75px" src="https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg" alt="Java Icon" /></a>
