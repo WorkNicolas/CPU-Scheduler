@@ -1,6 +1,6 @@
 <h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 
-<h2 style="font-weight:bold">Authors</h2>
+<h2 style="font-weight:bold">✍ Authors</h2>
 <ul>
 <li>John Gabriel Buenaventura</li>
 <li>Jose Mari Tan</li>
