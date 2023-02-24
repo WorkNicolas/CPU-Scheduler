@@ -50,7 +50,7 @@ In a group (maximum of 4 members per group), create a program that will simliate
 <h3 style="font-weight:bold;">Notes 📝</h3>
 <ul>
 <li>
-Choose your own programming language. ✔
+Choose your own programming language ✔
 </li>
 <li>
 One program, one CPU scheduling Algorithm or one program, six CPU scheduling Algorithms (Use selection to choose what CPU scheduling Algorithm to show) ✔
@@ -65,7 +65,7 @@ Display Average Waiting time
 Display Average Turnaround Time
 </li>
 <li>
-Process may all arrive at time 0 or may arrive any time.
+Process may all arrive at time 0 or may arrive any time
 </li>
 <li>
 Each process has its burst time. ✔
@@ -112,9 +112,9 @@ Group leader will send the documentation on behalf of the whole group
 You may add other features to make the program better
 </li>
 <li>
-Record the program presentation of your output.
+Record the program presentation of your output
 </li>
 <li>
-The group may use any video recording tool to demo the running program. All members of the group sholid participate on the recorded video demo of the running program.
+The group may use any video recording tool to demo the running program. All members of the group sholid participate on the recorded video demo of the running program
 </li>
 </ul>
