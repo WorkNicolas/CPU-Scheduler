@@ -1,7 +1,5 @@
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.Locale;
+import java.util.*;
+
 public class Schedule extends Thread {
     int id;
     Process[] p_array;
@@ -74,13 +72,17 @@ public class Schedule extends Thread {
         }
     }
     public void fcfs(Process[] p) {
-        Queue<Process> tempQueue = new LinkedList<>();
-        //Add process to ready queue
-        for (int i = 0; i < p.length; i++) {
-            rq.add(p[i]);
-        }
         displayProcessInfo(p);
         displayGanttChart(p);
+    }
+    public void sjf(Process[] p) {
+        int short_bt = p[0].getBt();
+        ArrayList<Process> processArrayList = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            if (short_bt < p[i].getBt()) {
+                short_bt = p[i].getBt();
+            }
+        }
     }
     public void displayGanttChart(Process[] p) {
         ANSI_Colors color = new ANSI_Colors();
