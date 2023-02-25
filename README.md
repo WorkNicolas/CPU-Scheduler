@@ -44,6 +44,7 @@
 
 <p>
 Waiting time = 0 for the first process, and for subsequent processes, it is the sum of the burst times of all previous processes
+
 Turnaround time = Burst time + Waiting time
 
 <b>Shortest-Job-First (SJF) Scheduling:</b>
