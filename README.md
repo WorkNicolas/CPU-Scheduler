@@ -1,4 +1,4 @@
-README.md<h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
+README.md<h1 align="center"> CPU Scheduler with Gantt Chart 📊 </h1>
 
 <h2 style="font-weight:bold">✍ Authors</h2>
 <ul>
@@ -8,7 +8,7 @@ README.md<h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 <li>Carl Nicolas V. Me[README.md](README.md)ndoza</li>
 </ul>
 
-<h2 style="font-weight:bold">✅ Current Features as of 2023-02-24T2107H ☑</h2>
+<h2 style="font-weight:bold">✅ Current Features as of 2023-02-24T2107H</h2>
 <b>Process.java ⚒</b>
 <ul>
 <li>Constructor: burst time, arrival time, and process id</li>
@@ -29,14 +29,14 @@ README.md<h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 <h2 style="font-weight:bold">What work do you want to do?</h2>
 <ul>
 <li>First Come First Serve (FCFS) ✔</li>
-<li>Shortest-Job-First (SJF) Scheduling</li>
-<li>Shortest Remaining Time</li>
-<li>Priority Scheduling</li>
-<li>Round-Robin Scheduling</li>
+<li>Shortest-Job-First (SJF) Scheduling ✔</li>
+<li>Shortest Remaining Time ✔</li>
+<li>Priority Scheduling ✔</li>
+<li>Round-Robin Scheduling ✔</li>
 <li>Multilevel Queue Scheduling</li>
 <li>GUI (unnecessary)</li>
-<li>Gantt Chart</li>
-<li>Documentation Format</li>
+<li>Gantt Chart ✔</li>
+<li>Documentation Format ✔</li>
 </ul>
 
 <h2 style="font-weight:bold">Notes</h2>
