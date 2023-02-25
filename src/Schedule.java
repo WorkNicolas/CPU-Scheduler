@@ -84,18 +84,38 @@ public class Schedule extends Thread {
     }
     public void displayGanttChart(Process[] p) {
         ANSI_Colors color = new ANSI_Colors();
-        String colorString;
-        String tempColorString = "";
+
+        for (int i = 0; i < rq.size(); i++) {
+
+        }
+
         System.out.println("Gantt Chart");
+        int rand, tempRand = -1;
         for (int i = 0; i < p.length; i++) {
+            //Color Randomizer
             do {
-                colorString = color.colorBackgroundRandomizer();
-            } while (colorString == tempColorString);
-            tempColorString = colorString;
+                rand = color.colorBackgroundRandomizer();
+            } while (rand == tempRand);
+
+            //Ready Queue
+            System.out.print(((char) 0x1b) + "[1A\r" + color.RESET + "Ready Queue: " + rq.peek().toString());
+            rq.poll();
+            if (tempRand == -1) {
+                System.out.println();
+            }
+            tempRand = rand;
             for (int j = 0; j <= p[i].getBt(); j++) {
-                System.out.print(colorString + p[i].toString());
+                //Display Loop
+                String processColor = color.COLOR_BG_ARRAY[rand];
+                System.out.print(((char) 0x1b) + "[1B" + processColor + p[i].toString());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+
+                }
             }
         }
+
     }
     public void displayProcessInfo(Process[] p) {
         //Process Info

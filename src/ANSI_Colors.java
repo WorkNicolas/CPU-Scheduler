@@ -9,6 +9,7 @@ public class ANSI_Colors {
     final String MAGENTA = "\u001b[35m";
     final String CYAN = "\u001b[36m";
     final String WHITE = "\u001b[37m";
+    final String RESET = "\u001b[0m";
     final String[] COLOR_ARRAY = {BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};
     //BG_Colors
     final String BLACK_BG = "\u001b[40m";
@@ -26,10 +27,10 @@ public class ANSI_Colors {
         double rand = (Math.random() * (MAX - MIN + 1) + MIN);
         return COLOR_ARRAY[(int) rand];
     }
-    public String colorBackgroundRandomizer() {
+    public int colorBackgroundRandomizer() {
         final int MAX = COLOR_BG_ARRAY.length - 1;
         final int MIN = 0;
         double rand = (Math.random() * (MAX - MIN + 1) + MIN);
-        return COLOR_BG_ARRAY[(int) rand];
+        return (int) rand;
     }
 }
