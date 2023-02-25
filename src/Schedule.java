@@ -1,6 +1,7 @@
 import java.util.Queue;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Locale;
 public class Schedule extends Thread {
     int id;
     Process[] p_array;
@@ -31,11 +32,11 @@ public class Schedule extends Thread {
         }
 
         for (int i = 0; i < p.length; i++) {
-            p[i] = createProcess(i);
+            p[i] = createProcess(i+1);
         }
 
         //CPU Scheduling Menu
-        while (exit) {
+        while (!exit) {
             System.out.println("Creating new CPU schedule");
             System.out.println("Choose CPU schedule");
             System.out.println("[1] First-Come-First-Serve");
@@ -48,6 +49,8 @@ public class Schedule extends Thread {
             switch(Integer.valueOf(sc.nextLine())) {
                 case 1:
                     System.out.println("Input: First-Come-First-Serve");
+                    fcfs(p);
+                    exit = true;
                     break;
                 case 2:
                     System.out.println("Input: Shortest-Job First");
@@ -71,17 +74,49 @@ public class Schedule extends Thread {
         }
     }
     public void fcfs(Process[] p) {
+        Queue<Process> tempQueue = new LinkedList<>();
         //Add process to ready queue
         for (int i = 0; i < p.length; i++) {
             rq.add(p[i]);
         }
-
+        displayProcessInfo(p);
+        displayGanttChart(p);
     }
-    //Parameters: process and finish time
-    public int calculateWaitingTime(Process p, int ft) {
-        //waiting time of a process = finish time of that process - execution time - arrival time
-        int wt = ft - p.getBt() - p.getAt();
-        return wt;
+    public void displayGanttChart(Process[] p) {
+        System.out.println("Gantt Chart");
+        for (int i = 0; i < p.length; i++) {
+            for (int j = 0; j <= p[i].getBt(); j++) {
+                System.out.print(p[i].toString());
+            }
+        }
+    }
+    public void displayProcessInfo(Process[] p) {
+        //Process Info
+        System.out.println("Process\tArrival Time\tBurst Time\tFinishing Time\tTurnaround Time\tWaiting Time");
+        for (int i = 0; i < p.length; i++) {
+            if (i > 0) {
+                p[i] .startCalculations(true, p[i - 1].getWt(), p[i - 1].getBt());
+            } else {
+                p[i].startCalculations(false, 0, 0);
+            }
+            System.out.print(p[i].toString() + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt() + "\n");
+        }
+        //Mean
+        //Calculate Waiting Time Mean
+        float wt_mean = 0;
+        for (int i = 0; i < p.length; i++) {
+            wt_mean += p[i].getWt();
+        }
+        wt_mean /= p.length;
+        System.out.printf(Locale.US, "Average Waiting Time: %.2f\n", wt_mean);
+
+        //Calculate Turnaround Time Mean
+        float tat_mean = 0;
+        for (int i = 0; i < p.length; i++) {
+            tat_mean += p[i].getTat();
+        }
+        tat_mean /= p.length;
+        System.out.printf(Locale.US, "Average Turnaround Time: %.2f\n", tat_mean);
     }
     @Override
     public void run() {
