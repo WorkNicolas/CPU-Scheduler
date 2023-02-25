@@ -28,7 +28,7 @@ README.md<h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 
 <h2 style="font-weight:bold">What work do you want to do?</h2>
 <ul>
-<li>First Come First Serve (FCFS)</li>
+<li>First Come First Serve (FCFS)</li> ✔
 <li>Shortest-Job-First (SJF) Scheduling</li>
 <li>Shortest Remaining Time</li>
 <li>Priority Scheduling</li>
