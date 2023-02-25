@@ -42,8 +42,8 @@
 <h2 style="font-weight:bold">Notes</h2>
 <b>First-Come, First-Served (FCFS) Scheduling:</b>
 
+<p>
 Waiting time = 0 for the first process, and for subsequent processes, it is the sum of the burst times of all previous processes
-
 Turnaround time = Burst time + Waiting time
 
 <b>Shortest-Job-First (SJF) Scheduling:</b>
@@ -85,6 +85,7 @@ Turnaround time = Time at which the process completes - Arrival time
 Waiting time = Turnaround time - Burst time
 
 Turnaround time = Time at which the process completes - Arrival time
+</p>
 
 <h3 align="left">⌨ Language Used</h3>
 <p align="left">
