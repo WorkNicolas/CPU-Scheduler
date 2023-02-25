@@ -83,10 +83,17 @@ public class Schedule extends Thread {
         displayGanttChart(p);
     }
     public void displayGanttChart(Process[] p) {
+        ANSI_Colors color = new ANSI_Colors();
+        String colorString;
+        String tempColorString = "";
         System.out.println("Gantt Chart");
         for (int i = 0; i < p.length; i++) {
+            do {
+                colorString = color.colorBackgroundRandomizer();
+            } while (colorString == tempColorString);
+            tempColorString = colorString;
             for (int j = 0; j <= p[i].getBt(); j++) {
-                System.out.print(p[i].toString());
+                System.out.print(colorString + p[i].toString());
             }
         }
     }

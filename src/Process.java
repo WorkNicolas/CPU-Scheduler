@@ -13,8 +13,8 @@ public class Process {
         this.wt = 0;
     }
     public int timeRandomizer() {
-        int MAX = 14;
-        int MIN = 1;
+        final int MAX = 14;
+        final int MIN = 1;
         double rand = (Math.random() * (MAX - MIN + 1) + MIN);
         return (int) rand;
     }
