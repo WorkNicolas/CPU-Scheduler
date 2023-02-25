@@ -56,6 +56,8 @@ public class Schedule extends Thread {
                     break;
                 case 3:
                     System.out.println("Input: Shortest Remaining Time");
+                    srt(p);
+                    exit = true;
                     break;
                 case 4:
                     System.out.println("Input: Priority Scheduling");
@@ -96,6 +98,61 @@ public class Schedule extends Thread {
         displayProcessInfo(p, false);
         displayGanttChart(p);
     }
+    public void srt(Process[] p) {
+        //Sorter: Arrival Time
+        Arrays.sort(p, Comparator.comparing(Process::getAt));
+
+        //Priority Queue to keep track of processes with shortest remaining time
+        PriorityQueue<Process> pq = new PriorityQueue<>(Comparator.comparing(Process::getRt).thenComparing(Process::getAt));
+
+        //Initialize Variables
+        int time = 0;
+        int completed = 0;
+
+        //Loop until all processes are completed
+        while (completed < p.length) {
+            //add newly arrived processes to the priority queue
+            while (completed < p.length && p[completed].getAt() <= time) {
+                pq.offer(p[completed]);
+                completed++;
+            }
+
+            if (!pq.isEmpty()) {
+                //get process with shortest remaining time
+                Process curr = pq.poll();
+
+                //Execute process for 1 unit of time
+                curr.setRemainingTime(curr.getRt() - 1);
+
+                //Update waiting time and remaining time of all processes
+                for (Process process : pq) {
+                    process.setTurnaroundTime(process.getTat() + 1);
+                    process.setRemainingTime(process.getRt() - 1);
+                }
+
+                //Check if current process has completed
+                if (curr.getRt() == 0) {
+                    curr.calculateTurnAroundTime(time + 1 - curr.getAt(), curr.getWt());
+                    curr.calculateWaitingTimeFCFS(false, curr.getWt(), curr.getBt());
+                    curr.calculateFinishingTime(time + 1, curr.getAt());
+                } else {
+                    // Process not completed, add it back to the priority queue
+                    pq.offer(curr);
+                }
+            }
+            //Update time
+            time++;
+        }
+        //Calculations
+        double totalTat = 0;
+        double totalWt = 0;
+        for (int i = 0; i < p.length; i++) {
+            totalTat = p[i].getTat();
+            totalWt = p[i].getWt();
+        }
+        displayProcessInfo(p, false);
+        displayGanttChart(p);
+    }
     public void prioritySched(Process[] p) {
         ArrayList<Integer> intList = new ArrayList<>();
         for (int i = 0; i < p.length; i++) {
@@ -129,7 +186,7 @@ public class Schedule extends Thread {
         int currentTime = 0;
         int totalBurstTime = 0;
 
-        //Sorter
+        //Sorter: Arrival Time
         Arrays.sort(p, Comparator.comparingInt(Process::getAt));
 
         //First Process
