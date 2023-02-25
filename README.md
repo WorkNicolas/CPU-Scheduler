@@ -40,30 +40,40 @@
 </ul>
 
 <h2 style="font-weight:bold">Notes</h2>
-<b>First-Come, First-Served (FCFS) Scheduling:</b>
 
 <p>
-Waiting time = 0 for the first process, and for subsequent processes, it is the sum of the burst times of all previous processes
 
-Turnaround time = Burst time + Waiting time
+<b>First-Come, First-Served (FCFS) Scheduling:</b>
+
+<ul>
+  <li>Waiting time = 0 for the first process, and for subsequent processes, it is the sum of the burst times of all previous processes</li>
+
+  <li>Turnaround time = Burst time + Waiting time</li>
+</ul>
 
 <b>Shortest-Job-First (SJF) Scheduling:</b>
 
-Waiting time = Time process is ready to execute - Arrival time
+<ul>
+  <li>Waiting time = Time process is ready to execute - Arrival time</li>
 
-Turnaround time = Burst time + Waiting time
+  <li>Turnaround time = Burst time + Waiting time</li>
+</ul>
 
 <b>Priority Scheduling:</b>
 
-Waiting time = Time spent in the ready queue waiting for CPU time
+<ul>
+  <li>Waiting time = Time spent in the ready queue waiting for CPU time</li>
 
-Turnaround time = Burst time + Waiting time
+  <li>Turnaround time = Burst time + Waiting time</li>
+</ul>
 
 <b>Round-Robin Scheduling:</b>
 
-Waiting time = Turnaround time - Burst time
+<ul>
+  <li>Waiting time = Turnaround time - Burst time</li>
 
-Turnaround time = Time at which the process completes - Arrival time
+  <li>Turnaround time = Time at which the process completes - Arrival time</li>
+</ul>
 
 <b>Multilevel Queue Scheduling:</b>
 
@@ -71,21 +81,27 @@ In Multilevel Queue Scheduling, processes are divided into different queues base
 
 Assuming each queue uses the FCFS scheduling algorithm, the formulas are:
 
-Waiting time = 0 for the first process in each queue, and for subsequent processes in each queue, it is the sum of the burst times of all previous processes in that queue
+<ul>
+<li>Waiting time = 0 for the first process in each queue, and for subsequent processes in each queue, it is the sum of the burst times of all previous processes in that queue</li>
 
-Turnaround time = Burst time + Waiting time
+  <li>Turnaround time = Burst time + Waiting time</li>
+</ul>
 
 For the case where each queue uses the Round Robin scheduling algorithm, the formulas are:
 
-Waiting time = Turnaround time - Burst time
+<ul>
+  <li>Waiting time = Turnaround time - Burst time</li>
 
-Turnaround time = Time at which the process completes - Arrival time
+  <li>Turnaround time = Time at which the process completes - Arrival time</li>
+</ul>
 
 <b>Shortest Remaining Time (SRT) Scheduling:</b>
 
-Waiting time = Turnaround time - Burst time
+<ul>
+  <li>Waiting time = Turnaround time - Burst time</li>
 
-Turnaround time = Time at which the process completes - Arrival time
+  <li>Turnaround time = Time at which the process completes - Arrival time</li>
+</ul>
 </p>
 
 <h3 align="left">⌨ Language Used</h3>
@@ -134,26 +150,26 @@ Create a documentation (use your own format) then upload it as your answer
 <li>
 Documentation should contain:
 </li>
-<ul>
-<li>
-Members of the group with corresponding role/contribution in the development of the activity
-</li>
-<li>
-Short description about each CPU schedliing Algorithm
-</li>
-<li>
-Short description about the program
-</li>
-<li>
-Detailed explanation of each CPU schedliing Algorithm based on the created program
-</li>
-<li>
-Programming Codes
-</li>
-<li>
-Sample and explanation for each CPU schedliing Algorithm while running the created program
-</li>
-</ul>
+  <ul>
+  <li>
+  Members of the group with corresponding role/contribution in the development of the activity
+  </li>
+  <li>
+  Short description about each CPU schedliing Algorithm
+  </li>
+  <li>
+  Short description about the program
+  </li>
+  <li>
+  Detailed explanation of each CPU schedliing Algorithm based on the created program
+  </li>
+  <li>
+  Programming Codes
+  </li>
+  <li>
+  Sample and explanation for each CPU schedliing Algorithm while running the created program
+  </li>
+  </ul>
 <li>
 Group leader will send the documentation on behalf of the whole group
 </li>
