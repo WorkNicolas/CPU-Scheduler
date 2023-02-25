@@ -5,7 +5,7 @@ README.md<h1 align="center"> CPU Scheduler 📅 with Gantt Chart 📊 </h1>
 <li>John Gabriel Buenaventura</li>
 <li>Jose Mari Tan</li>
 <li>Maria Clarissa Marasigan</li>
-<li>Carl Nicolas V. Mendoza</li>
+<li>Carl Nicolas V. Me[README.md](README.md)ndoza</li>
 </ul>
 
 <h2 style="font-weight:bold">✅ Current Features as of 2023-02-24T2107H ☑</h2>

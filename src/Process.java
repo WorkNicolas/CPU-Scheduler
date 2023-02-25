@@ -8,12 +8,15 @@ public class Process {
     private int ft; //finishing time
     private int tat; //turnaround time
     private int wt; //waiting time
-    private int pr; //priority
+    private int pr; //priority (Priority Scheduling)
+    private int qua; //quantum slice (Round-Robin)
+    private int rt; //remaining time (Round-Robin)
     Process (int pid) {
         this.bt = timeRandomizer();
         this.at = timeRandomizer();
         this.pid = pid;
         this.wt = 0;
+        this.rt = bt;
     }
     public int timeRandomizer() {
         final int MAX = 14;
@@ -36,6 +39,8 @@ public class Process {
     public int getPr() {
         return pr;
     }
+    public int getQua() { return qua; }
+    public int getRt() { return rt; }
     public void calculateFinishingTime(int bt_param, int at_param) {
         //finishing time = burst time + arrival time
         ft = bt_param + at_param;
@@ -61,6 +66,12 @@ public class Process {
     public void setPriority(int pr_param) {
         pr = pr_param;
     }
+    public void setQuantum(int qua_param) { qua = qua_param; }
+    public void setRemainingTime(int rt_param) { rt = rt_param; }
+    public void setTurnaroundTime(int qua_param) {
+        tat = qua_param;
+    }
+
     @Override
     public String toString() {
         return "|P" + pid + "|";

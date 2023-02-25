@@ -1,71 +1,52 @@
+import java.util.LinkedList;
+import java.util.Queue;
 
-
-import java.util.*;
 public class RoundRobin {
+    // define a process class to hold process information
+    private static class Process {
+        String name;
+        int burstTime;
+        int remainingTime;
 
-    public static void main(String[] args){
-        int nProcess,i,qt,count=0,temp,sq=0,BurstTime[],WaitingTime[],TurnAroundTime[],rem_BurstTime[];
-        float AverageWaitingTime=0,AverageTurnAroundTime=0;
-
-        BurstTime = new int[10];
-        WaitingTime = new int[10];
-        TurnAroundTime = new int[10];
-        rem_BurstTime = new int[10];
-        Scanner s=new Scanner(System.in);
-        System.out.print("Enter the number of process (maximum 10) = ");
-        nProcess = s.nextInt();
-        System.out.print("Enter the burst time of the process\n");
-        for (i=0;i<nProcess;i++)
-        {
-            System.out.print("P"+i+" = ");
-            BurstTime[i] = s.nextInt();
-            rem_BurstTime[i] = BurstTime[i];
+        Process(String name, int burstTime) {
+            this.name = name;
+            this.burstTime = burstTime;
+            this.remainingTime = burstTime;
         }
-        System.out.print("Enter the quantum time: ");
-        qt = s.nextInt();
-        while(true)
-        {
-            for (i=0,count=0;i<nProcess;i++)
-            {
-                temp = qt;
-                if(rem_BurstTime[i] == 0)
-                {
-                    count++;
-                    continue;
-                }
-                if(rem_BurstTime[i]>qt)
-                    rem_BurstTime[i]= rem_BurstTime[i] - qt;
-                else
-                if(rem_BurstTime[i]>=0)
-                {
-                    temp = rem_BurstTime[i];
-                    rem_BurstTime[i] = 0;
-                }
-                sq += temp;
-                TurnAroundTime[i] = sq;
+    }
+
+    // define the Round Robin scheduling function
+    public static void roundRobin(Process[] processes, int quantum) {
+        Queue<Process> queue = new LinkedList<>();
+        int n = processes.length;
+        int time = 0;
+        for (int i = 0; i < n; i++) {
+            queue.add(processes[i]);
+        }
+        while (!queue.isEmpty()) {
+            Process currentProcess = queue.poll();
+            System.out.println("Executing " + currentProcess.name + " at time " + time);
+            if (currentProcess.remainingTime > quantum) {
+                currentProcess.remainingTime -= quantum;
+                time += quantum;
+                queue.add(currentProcess);
+            } else {
+                time += currentProcess.remainingTime;
+                currentProcess.remainingTime = 0;
+                System.out.println(currentProcess.name + " completed at time " + time);
             }
-            if(nProcess == count)
+            if (queue.stream().anyMatch(process -> process.remainingTime > 0)) {
+                continue;
+            } else {
                 break;
+            }
         }
-        System.out.print("--------------------------------------------------------------------------------");
-        System.out.print("\nProcess\t      Burst Time\t       Turnaround Time\t          Waiting Time\n");
-        System.out.print("--------------------------------------------------------------------------------");
-        for(i=0;i<nProcess;i++)
-        {
-            WaitingTime[i]=TurnAroundTime[i]-BurstTime[i];
-            AverageWaitingTime=AverageWaitingTime+WaitingTime[i];
-            AverageTurnAroundTime=AverageTurnAroundTime+TurnAroundTime[i];
-            System.out.print("\n "+(i+1)+"\t\t "+BurstTime[i]+"\t\t\t "+TurnAroundTime[i]+"\t\t\t\t"+WaitingTime[i]+"\n");
-        }
-        System.out.println("Gantt Chart: ");
-        for(i = 0; i < nProcess; i++) {
-            System.out.print("P" +i+" ");
-        }
-        AverageWaitingTime=AverageWaitingTime/nProcess;
-        AverageTurnAroundTime=AverageTurnAroundTime/nProcess;
-        System.out.println("\nAverage waiting Time = "+AverageWaitingTime+"s"+"\n");
-        System.out.println("Average turnaround time = "+AverageTurnAroundTime+"s");
+    }
 
-
+    // example usage of the function
+    public static void main(String[] args) {
+        Process[] processes = {new Process("P1", 10), new Process("P2", 5), new Process("P3", 8)};
+        int quantum = 2;
+        roundRobin(processes, quantum);
     }
 }

@@ -1,10 +1,5 @@
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.Scanner;
-import java.util.Locale;
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.ArrayList;
+import java.util.*;
+
 public class Schedule extends Thread {
     int id;
     Process[] p_array;
@@ -69,6 +64,8 @@ public class Schedule extends Thread {
                     break;
                 case 5:
                     System.out.println("Input: Round-Robin Scheduling");
+                    roundRobin(p);
+                    exit = true;
                     break;
                 case 6:
                     System.out.println("Input: Multilevel Queue Scheduling");
@@ -123,6 +120,53 @@ public class Schedule extends Thread {
         displayProcessInfo(p, true);
         displayGanttChart(p);
     }
+    public void roundRobin(Process[] p) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Input Quantum Slice: ");
+        int qua = Integer.valueOf(sc.nextLine());
+        ArrayList<Process> rq = new ArrayList<>();
+        ArrayList<Process> completedProcess = new ArrayList<>();
+        int currentTime = 0;
+        int totalBurstTime = 0;
+
+        //Sorter
+        Arrays.sort(p, Comparator.comparingInt(Process::getAt));
+
+        //First Process
+        rq.add(p[0]);
+
+        //Loop until all processes are compelte
+        while (!rq.isEmpty() || currentTime < totalBurstTime) {
+            Process currentProcess = rq.get(0);
+            rq.remove(0);
+
+            //Execute the current process for a quantum slice
+            int remainingTime = currentProcess.getRt();
+            if (remainingTime > qua) {
+                currentProcess.setRemainingTime(remainingTime - qua);
+                currentTime += qua;
+            } else {
+                currentTime += remainingTime;
+                currentProcess.setRemainingTime(0);
+                currentProcess.setTurnaroundTime(currentTime - currentProcess.getAt());
+                completedProcess.add(currentProcess);
+            }
+
+            //Add new processes that have arrived
+            for (Process process : p) {
+                if (process.getAt() <= currentTime && !rq.contains(process) && !completedProcess.contains(process)) {
+                    rq.add(process);
+                }
+            }
+
+            // Add the current process back to the end of the ready queue if it still has remaining time
+            if (currentProcess.getRt() > 0) {
+                rq.add(currentProcess);
+            }
+        }
+        displayProcessInfo(p, false);
+        displayGanttChartQueue(p);
+    }
     public void displayGanttChart(Process[] p) {
         ANSI_Colors color = new ANSI_Colors();
 
@@ -147,7 +191,31 @@ public class Schedule extends Thread {
                 }
             }
         }
+    }
+    public void displayGanttChartQueue(Process[] p) {
+        ANSI_Colors color = new ANSI_Colors();
 
+        System.out.println("\n\nGantt Chart");
+        int rand, tempRand = -1;
+        for (int i = 0; i < p.length; i++) {
+
+            //Color Randomizer
+            do {
+                rand = color.colorBackgroundRandomizer();
+            } while (rand == tempRand);
+
+            tempRand = rand;
+            for (int j = 0; j <= p[i].getBt(); j++) {
+                //Display Loop
+                String processColor = color.COLOR_BG_ARRAY[rand];
+                System.out.print(processColor + p[i].toString());
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+
+                }
+            }
+        }
     }
     public void displayProcessInfo(Process[] p, boolean prioritized) {
         //Process Info
