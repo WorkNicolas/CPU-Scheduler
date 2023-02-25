@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 public class Process {
     private int bt; //burst time
@@ -6,6 +8,7 @@ public class Process {
     private int ft; //finishing time
     private int tat; //turnaround time
     private int wt; //waiting time
+    private int pr; //priority
     Process (int pid) {
         this.bt = timeRandomizer();
         this.at = timeRandomizer();
@@ -30,6 +33,9 @@ public class Process {
     public int getFt() { return ft; }
     public int getWt() { return wt; }
     public int getTat() { return tat; }
+    public int getPr() {
+        return pr;
+    }
     public void calculateFinishingTime(int bt_param, int at_param) {
         //finishing time = burst time + arrival time
         ft = bt_param + at_param;
@@ -51,6 +57,9 @@ public class Process {
         calculateFinishingTime(bt, at);
         calculateWaitingTimeFCFS(burst, prev_wt, prev_bt);
         calculateTurnAroundTime(bt, wt);
+    }
+    public void setPriority(int pr_param) {
+        pr = pr_param;
     }
     @Override
     public String toString() {

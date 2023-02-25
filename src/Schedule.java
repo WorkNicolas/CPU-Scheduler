@@ -1,9 +1,13 @@
-import java.util.*;
-
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Scanner;
+import java.util.Locale;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.ArrayList;
 public class Schedule extends Thread {
     int id;
     Process[] p_array;
-    Queue<Process> rq = new LinkedList<>(); //ready queue
     Schedule() {
 
     }
@@ -52,12 +56,16 @@ public class Schedule extends Thread {
                     break;
                 case 2:
                     System.out.println("Input: Shortest-Job First");
+                    sjf(p);
+                    exit = true;
                     break;
                 case 3:
                     System.out.println("Input: Shortest Remaining Time");
                     break;
                 case 4:
                     System.out.println("Input: Priority Scheduling");
+                    prioritySched(p);
+                    exit = true;
                     break;
                 case 5:
                     System.out.println("Input: Round-Robin Scheduling");
@@ -72,17 +80,48 @@ public class Schedule extends Thread {
         }
     }
     public void fcfs(Process[] p) {
-        displayProcessInfo(p);
+        displayProcessInfo(p, false);
         displayGanttChart(p);
     }
     public void sjf(Process[] p) {
-        int short_bt = p[0].getBt();
-        ArrayList<Process> processArrayList = new ArrayList<>();
+        ArrayList<Process> p_al = new ArrayList<>();
         for (int i = 0; i < p.length; i++) {
-            if (short_bt < p[i].getBt()) {
-                short_bt = p[i].getBt();
-            }
+            p_al.add(p[i]);
         }
+        Collections.sort(p_al, new Comparator<Process>() {
+            public int compare(Process p1, Process p2) {
+                return Integer.compare(p1.getBt(), p2.getBt());
+            }
+        });
+        for (int i = 0; i < p.length; i++) {
+            p[i] = p_al.get(i);
+        }
+        displayProcessInfo(p, false);
+        displayGanttChart(p);
+    }
+    public void prioritySched(Process[] p) {
+        ArrayList<Integer> intList = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            intList.add(i + 1);
+        }
+        Collections.shuffle(intList);
+        for(int i = 0; i < p.length; i++) {
+            p[i].setPriority(intList.get(i));
+        }
+        ArrayList<Process> p_al = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            p_al.add(p[i]);
+        }
+        Collections.sort(p_al, new Comparator<Process>() {
+            public int compare(Process p2, Process p1) {
+                return Integer.compare(p1.getPr(), p2.getPr());
+            }
+        });
+        for (int i = 0; i < p.length; i++) {
+            p[i] = p_al.get(i);
+        }
+        displayProcessInfo(p, true);
+        displayGanttChart(p);
     }
     public void displayGanttChart(Process[] p) {
         ANSI_Colors color = new ANSI_Colors();
@@ -96,6 +135,7 @@ public class Schedule extends Thread {
                 rand = color.colorBackgroundRandomizer();
             } while (rand == tempRand);
 
+            tempRand = rand;
             for (int j = 0; j <= p[i].getBt(); j++) {
                 //Display Loop
                 String processColor = color.COLOR_BG_ARRAY[rand];
@@ -109,16 +149,24 @@ public class Schedule extends Thread {
         }
 
     }
-    public void displayProcessInfo(Process[] p) {
+    public void displayProcessInfo(Process[] p, boolean prioritized) {
         //Process Info
-        System.out.println("Process\tArrival Time\tBurst Time\tFinishing Time\tTurnaround Time\tWaiting Time");
+        System.out.print("Process\tArrival Time\tBurst Time\tFinishing Time\tTurnaround Time\tWaiting Time");
+        if (prioritized) {
+            System.out.print("\tPriority");
+        }
+        System.out.println();
         for (int i = 0; i < p.length; i++) {
             if (i > 0) {
                 p[i] .startCalculations(true, p[i - 1].getWt(), p[i - 1].getBt());
             } else {
                 p[i].startCalculations(false, 0, 0);
             }
-            System.out.print(p[i].toString() + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt() + "\n");
+            System.out.print(p[i].toString() + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt());
+            if (prioritized) {
+                System.out.print("\t\t\t\t" + p[i].getPr());
+            }
+            System.out.println();
         }
         //Mean
         //Calculate Waiting Time Mean
