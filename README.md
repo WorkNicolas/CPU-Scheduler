@@ -5,7 +5,7 @@ README.md<h1 align="center"> CPU Scheduler with Gantt Chart 📊 </h1>
 <li>John Gabriel Buenaventura</li>
 <li>Jose Mari Tan</li>
 <li>Maria Clarissa Marasigan</li>
-<li>Carl Nicolas V. Me[README.md](README.md)ndoza</li>
+<li>Carl Nicolas V. Mendoza</li>
 </ul>
 
 <h2 style="font-weight:bold">What work do you want to do?</h2>
