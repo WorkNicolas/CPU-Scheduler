@@ -311,7 +311,7 @@ public class Schedule extends Thread {
     }
     public void displayProcessInfo(Process[] p, boolean prioritized) {
         //Process Info
-        System.out.print("Process\tArrival Time\tBurst Time\tFinishing Time\tTurnaround Time\tWaiting Time");
+        System.out.print("Process\tArrival Time\tBurst Time\tFinishing Time\tTurnaround Time\tWaiting Time\tResponse Time");
         if (prioritized) {
             System.out.print("\tPriority");
         }
@@ -322,7 +322,7 @@ public class Schedule extends Thread {
             } else {
                 p[i].startCalculations(false, 0, 0);
             }
-            System.out.print("|P" + p[i].getPid() + "|" + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt());
+            System.out.print("|P" + p[i].getPid() + "|" + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt() + "\t\t\t\t" + Math.abs(p[i].getFt() - p[i].getAt()));
             if (prioritized) {
                 System.out.print("\t\t\t\t" + p[i].getPr());
             }
@@ -335,7 +335,7 @@ public class Schedule extends Thread {
             wt_mean += p[i].getWt();
         }
         wt_mean /= p.length;
-        System.out.printf(Locale.US, "Average Waiting Time: %.2f\n", wt_mean);
+        System.out.printf(Locale.US, "Average Waiting Time: %.2f ms\n", wt_mean);
 
         //Calculate Turnaround Time Mean
         float tat_mean = 0;
@@ -343,7 +343,7 @@ public class Schedule extends Thread {
             tat_mean += p[i].getTat();
         }
         tat_mean /= p.length;
-        System.out.printf(Locale.US, "Average Turnaround Time: %.2f\n", tat_mean);
+        System.out.printf(Locale.US, "Average Turnaround Time: %.2f ms\n", tat_mean);
     }
     @Override
     public void run() {
