@@ -11,12 +11,15 @@ public class Process {
     private int pr; //priority (Priority Scheduling)
     private int qua; //quantum slice (Round-Robin)
     private int rt; //remaining time (Round-Robin)
+    private ANSI_Colors ansiColors = new ANSI_Colors();
+    String ansiColor;
     Process (int pid) {
         this.bt = timeRandomizer();
         this.at = timeRandomizer();
         this.pid = pid;
         this.wt = 0;
         this.rt = bt;
+        this.ansiColor = ansiColors.COLOR_BG_ARRAY[ansiColors.colorBackgroundRandomizer()];
     }
     public int timeRandomizer() {
         final int MAX = 14;
@@ -71,9 +74,12 @@ public class Process {
     public void setTurnaroundTime(int qua_param) {
         tat = qua_param;
     }
+    public void setAnsiColors() {
+
+    }
 
     @Override
     public String toString() {
-        return "|P" + pid + "|";
+        return ansiColor + "|P" + pid + "|";
     }
 }

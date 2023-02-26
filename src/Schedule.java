@@ -183,48 +183,52 @@ public class Schedule extends Thread {
         Scanner sc = new Scanner(System.in);
         System.out.print("Input Quantum Slice: ");
         int qua = Integer.valueOf(sc.nextLine());
-        ArrayList<Process> rq = new ArrayList<>();
-        ArrayList<Process> completedProcess = new ArrayList<>();
-        int currentTime = 0;
-        int totalBurstTime = 0;
 
         //Sorter: Arrival Time
-        Arrays.sort(p, Comparator.comparingInt(Process::getAt));
-
-        //First Process
-        rq.add(p[0]);
-
-        //Loop until all processes are compelte
-        while (!rq.isEmpty() || currentTime < totalBurstTime) {
-            Process currentProcess = rq.get(0);
-            rq.remove(0);
-
-            //Execute the current process for a quantum slice
-            int remainingTime = currentProcess.getRt();
-            if (remainingTime > qua) {
-                currentProcess.setRemainingTime(remainingTime - qua);
-                currentTime += qua;
-            } else {
-                currentTime += remainingTime;
-                currentProcess.setRemainingTime(0);
-                currentProcess.setTurnaroundTime(currentTime - currentProcess.getAt());
-                completedProcess.add(currentProcess);
+        ArrayList<Process> p_al = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            p_al.add(p[i]);
+        }
+        Collections.sort(p_al, new Comparator<Process>() {
+            public int compare(Process p1, Process p2) {
+                return Integer.compare(p1.getBt(), p2.getBt());
             }
-
-            //Add new processes that have arrived
-            for (Process process : p) {
-                if (process.getAt() <= currentTime && !rq.contains(process) && !completedProcess.contains(process)) {
-                    rq.add(process);
+        });
+        Process[] p_1 = new Process[p.length];
+        for (int i = 0; i < p.length; i++) {
+            p_1[i] = p_al.get(i);
+        }
+        Queue<Process> rq = new LinkedList<>();
+        //Round-Robin
+        int index = 0;
+        boolean trueBreak = true;
+        while (trueBreak) {
+            //Quantum Splicing
+            if (p[index].getRt() > 0) {
+                for (int i = 0; i < qua; i++) {
+                    //Stops subtracting if rt <= 0
+                    if (p[index].getRt() > 0) {
+                        p[index].setRemainingTime(p[index].getRt() - 1);
+                        rq.add(p[index]);
+                    }
                 }
             }
-
-            // Add the current process back to the end of the ready queue if it still has remaining time
-            if (currentProcess.getRt() > 0) {
-                rq.add(currentProcess);
+            //checks if all rt <= 0
+            if (index == p.length - 1) {
+                for (int i = 0; i < p.length; i++) {
+                    if (p[index].getRt() <= 0) {
+                        trueBreak = false;
+                    } else {
+                        trueBreak = true;
+                        index = 0;
+                    }
+                }
             }
+            index++;
         }
+
         displayProcessInfo(p, false);
-        displayGanttChartQueue(p);
+        displayGanttChartQueue(rq);
     }
     public void mlqs(Process[] p) {
         Queue<Process> fcfsQueue = new LinkedList<>();
@@ -292,28 +296,16 @@ public class Schedule extends Thread {
             }
         }
     }
-    public void displayGanttChartQueue(Process[] p) {
+    public void displayGanttChartQueue(Queue<Process> rq) {
         ANSI_Colors color = new ANSI_Colors();
+        for (int i = 0; i < rq.size(); i++) {
+            //Display
+            System.out.print(rq.peek().toString());
+            rq.poll();
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
 
-        System.out.println("\n\nGantt Chart");
-        int rand, tempRand = -1;
-        for (int i = 0; i < p.length; i++) {
-
-            //Color Randomizer
-            do {
-                rand = color.colorBackgroundRandomizer();
-            } while (rand == tempRand);
-
-            tempRand = rand;
-            for (int j = 0; j <= p[i].getBt(); j++) {
-                //Display Loop
-                String processColor = color.COLOR_BG_ARRAY[rand];
-                System.out.print(processColor + p[i].toString());
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-
-                }
             }
         }
     }
@@ -326,11 +318,11 @@ public class Schedule extends Thread {
         System.out.println();
         for (int i = 0; i < p.length; i++) {
             if (i > 0) {
-                p[i] .startCalculations(true, p[i - 1].getWt(), p[i - 1].getBt());
+                p[i].startCalculations(true, p[i - 1].getWt(), p[i - 1].getBt());
             } else {
                 p[i].startCalculations(false, 0, 0);
             }
-            System.out.print(p[i].toString() + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt());
+            System.out.print("|P" + p[i].getPid() + "|" + "\t" + p[i].getAt() + "\t\t\t\t" + p[i].getBt() + "\t\t\t" + p[i].getFt() + "\t\t\t\t" + p[i].getTat() + "\t\t\t\t" + p[i].getWt());
             if (prioritized) {
                 System.out.print("\t\t\t\t" + p[i].getPr());
             }
