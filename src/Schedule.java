@@ -71,6 +71,8 @@ public class Schedule extends Thread {
                     break;
                 case 6:
                     System.out.println("Input: Multilevel Queue Scheduling");
+                    mlqs(p);
+                    exit = true;
                     break;
                 default:
                     System.out.println("Invalid Input!");
@@ -223,6 +225,47 @@ public class Schedule extends Thread {
         }
         displayProcessInfo(p, false);
         displayGanttChartQueue(p);
+    }
+    public void mlqs(Process[] p) {
+        Queue<Process> fcfsQueue = new LinkedList<>();
+        Queue<Process> priorityQueue = new LinkedList<>();
+        //SJF Queue
+        ArrayList<Process> p_al = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            p_al.add(p[i]);
+        }
+        Collections.sort(p_al, new Comparator<Process>() {
+            public int compare(Process p1, Process p2) {
+                return Integer.compare(p1.getBt(), p2.getBt());
+            }
+        });
+        //FCFS Queue
+        for (int i = 0; i < p.length; i++) {
+            fcfsQueue.add(p_al.get(i));
+        }
+        //Priority Scheduling
+        ArrayList<Integer> intList = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            intList.add(i + 1);
+        }
+        Collections.shuffle(intList);
+        for(int i = 0; i < p.length; i++) {
+            p[i].setPriority(intList.get(i));
+        }
+        p_al = new ArrayList<>();
+        for (int i = 0; i < p.length; i++) {
+            p_al.add(p[i]);
+        }
+        Collections.sort(p_al, new Comparator<Process>() {
+            public int compare(Process p2, Process p1) {
+                return Integer.compare(p1.getPr(), p2.getPr());
+            }
+        });
+        for (int i = 0; i < p.length; i++) {
+            p[i] = p_al.get(i);
+        }
+        displayProcessInfo(p, true);
+        displayGanttChart(p);
     }
     public void displayGanttChart(Process[] p) {
         ANSI_Colors color = new ANSI_Colors();
